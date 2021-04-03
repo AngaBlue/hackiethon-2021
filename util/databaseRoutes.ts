@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { createConnection } from "mysql";
 
 import { UserInfoType } from "./types";
@@ -12,7 +13,7 @@ const connection = createConnection({
 // NOTHING IN HERE HAS YET BEEN TESTED
 
 // Returns username based off nextAuthID
-function getUsername(nextAuthAccessToken: string): string {
+export function getUsername(nextAuthAccessToken: string): string {
     connection.query(
         "SELECT sessions.id, int_users.username \
         FROM int_users \
@@ -28,13 +29,13 @@ function getUsername(nextAuthAccessToken: string): string {
     return;
 }
 
-function setUsername(nextAuthAccessToken: string, userInfo: UserInfoType): void {
+export function setUsername(nextAuthAccessToken: string, userInfo: UserInfoType): void {
     // Should set the username by userID
     console.error("setUsername function is incomplete");
     return;
 }
 
-function getUserFriends(nextAuthAccessToken: string): Array<string> {
+export function getUserFriends(nextAuthAccessToken: string): Array<string> {
     connection.query(
         "SELECT int_users.id, int_users.username, int_users.last_online \
         FROM (SELECT id FROM int_users WHERE id = [user ID]) AS int_users \
@@ -51,7 +52,7 @@ function getUserFriends(nextAuthAccessToken: string): Array<string> {
     return;
 }
 
-function getUserID(nextAuthAccessToken: string): number {
+export function getUserID(nextAuthAccessToken: string): number {
     connection.query(
         "SELECT user_id \
         FROM sessions \
@@ -65,4 +66,21 @@ function getUserID(nextAuthAccessToken: string): number {
     return;
 }
 
-export { getUsername, setUsername, getUserFriends, getUserID };
+export function createNewUser(id: number, username: string): void {
+    connection.query("", function (error, results, fields) {
+        if (error) throw error;
+        // connected!
+    });
+    console.error("createNewUser function is incomplete");
+    return;
+}
+
+export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs) {
+    console.error("createEvent function is incomplete");
+    return;
+}
+
+export function createRecurringEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs, dayOfWeek: number) {
+    console.error("createRecurringEvent function is incomplete");
+    return;
+}
