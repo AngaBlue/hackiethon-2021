@@ -9,14 +9,22 @@ interface SignInProps {
 
 export default function SignIn({ providers }: SignInProps): JSX.Element {
     return (
-        <div>
-            {Object.values(providers).map((provider) => (
-                <div key={provider.name}>
-                    <Button variant="primary" onClick={() => signIn(provider.id)}>
-                        Sign in with {provider.name}
-                    </Button>
-                </div>
-            ))}
+        <div className="flex text-center flex-col justify-center content-center h-screen">
+            <div>
+                <h1 className="font-bold text-4xl mb-4">Sign In</h1>
+                <p className="mb-8">
+                    Sign into Social Motion with one of our secure authorisation providers.
+                    <br />
+                    Your password will not be shared with Social Motion.
+                </p>
+                {Object.values(providers).map((provider) => (
+                    <div key={provider.name}>
+                        <Button variant="primary" onClick={() => signIn(provider.id)} className="w-48 mb-4">
+                            Sign in with {provider.name}
+                        </Button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

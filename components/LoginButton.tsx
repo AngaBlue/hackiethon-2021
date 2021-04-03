@@ -5,7 +5,7 @@ import Button from "./Button";
 
 export default function LoginButton(): JSX.Element {
     return (
-        <Link href="api/auth/login">
+        <Link href="/auth/login">
             <Button variant="primary">Log in</Button>
         </Link>
     );
