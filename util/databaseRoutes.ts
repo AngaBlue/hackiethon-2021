@@ -15,4 +15,4 @@ function getUserIDByNextAuthAccessToken(nextAuthAccessToken: string): number {
     return;
 }
 
-export { getUsername, getUserFriends };
+export { getUsername, getUserFriends, getUserIDByNextAuthAccessToken };
