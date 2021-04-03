@@ -1,7 +1,7 @@
 import { getProviders, signIn } from "next-auth/client";
 
 import Button from "../../components/Button";
-import { PromiseResolvedType } from "../util/types";
+import { PromiseResolvedType } from "../../util/types";
 
 interface SignInProps {
     providers: PromiseResolvedType<ReturnType<typeof getProviders>>;
@@ -19,7 +19,7 @@ export default function SignIn({ providers }: SignInProps): JSX.Element {
                 </p>
                 {Object.values(providers).map((provider) => (
                     <div key={provider.name}>
-                        <Button variant="primary" onClick={() => signIn(provider.id)} className="w-48 mb-4">
+                        <Button variant="primary" onClick={() => signIn(provider.id)} className="w-64 mb-4">
                             Sign in with {provider.name}
                         </Button>
                     </div>
