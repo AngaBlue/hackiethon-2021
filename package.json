@@ -10,6 +10,7 @@
         "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,md,json,scss}\" --config ./.prettierrc"
     },
     "dependencies": {
+        "@types/mysql": "^2.15.18",
         "mysql": "^2.18.1",
         "next": "10.1.2",
         "next-auth": "^3.13.3",
