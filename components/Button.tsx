@@ -5,10 +5,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const colour: { [key in ButtonType]: string } = {
-    default: "bg-gray-600",
+    default: "bg-blue-100",
     primary: "bg-blue-600",
     danger: "bg-red-600",
-    warning: "bg-orange-600"
+    warning: "bg-yellow-600"
 };
 
 export default function Button({ variant, ...props }: ButtonProps): JSX.Element {
