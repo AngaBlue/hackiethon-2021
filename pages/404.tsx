@@ -1,12 +1,12 @@
-import Head from "next/head";
 import Link from "next/link";
+import React from "react";
+
+import Head from "../components/layout/Head";
 
 export default function Custom404(): JSX.Element {
     return (
         <>
-            <Head>
-                <title>Social Motion | 404 Page Not Found</title>
-            </Head>
+            <Head title="Page Not Found" />
             <div className="flex content-center justify-center p-8 flex-col w-full min-h-full text-center">
                 <h1 className="font-bold text-3xl mb-8">404 Page Not Found</h1>
                 <p>
