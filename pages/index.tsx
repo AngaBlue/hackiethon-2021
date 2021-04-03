@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+import Button from "../components/Button";
 import styles from "../styles/Home.module.scss";
 
 export default function Home(): JSX.Element {
@@ -43,7 +44,7 @@ export default function Home(): JSX.Element {
                     </a>
                 </div>
             </main>
-
+            <Button variant="primary">Oli Button</Button>
             <footer className={styles.footer}>
                 <a
                     href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
