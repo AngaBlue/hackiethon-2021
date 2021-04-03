@@ -23,9 +23,10 @@
     grid-area: content;
     min-height: 100%;
     overflow: auto;
-    position: relative;
 }
 
 .page {
     min-height: 100%;
+    height: 100%;
+    position: relative;
 }
