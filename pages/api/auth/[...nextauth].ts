@@ -24,5 +24,15 @@ export default NextAuth({
             clientSecret: process.env.GITHUB_SECRET
         })
     ],
-    database: process.env.DATABASE_URL
+    database: {
+        type: "mysql",
+        host: process.env.DATABASE_URL,
+        port: 3306,
+        username: process.env.DATABASE_ID,
+        password: process.env.DATABASE_SECRET,
+        database: process.env.DATABASE_NAME
+    },
+    pages: {
+        signIn: "/auth/signin"
+    }
 });
