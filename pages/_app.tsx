@@ -4,15 +4,22 @@ import type { AppProps } from "next/app";
 import { Provider } from "next-auth/client";
 import React from "react";
 
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
+import Nav from "../components/layout/Nav";
+import styles from "../styles/_app.module.scss";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     return (
         <Provider session={pageProps.session}>
-            <Nav />
-            <Component {...pageProps} />
-            <Footer />
+            <main className={styles.main}>
+                <Header />
+                <Nav />
+                <div className={styles.content}>
+                    <Component {...pageProps} />
+                    <Footer />
+                </div>
+            </main>
         </Provider>
     );
 }
