@@ -16,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 <Header />
                 <Nav />
                 <div className={styles.content}>
-                    <Component {...pageProps} />
+                    <div className={styles.page}>
+                        <Component {...pageProps} />
+                    </div>
                     <Footer />
                 </div>
             </main>
