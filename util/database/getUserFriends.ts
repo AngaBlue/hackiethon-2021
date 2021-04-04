@@ -1,10 +1,10 @@
-import { UserRelationship } from "../../types/database";
 import { User } from "../../types/database";
 import connection from "./connection";
-import { getUserID } from "./getUserID";
 
-export async function getUserFriends(nextAuthAccessToken: string): Promise<Array<Partial<User>>> {
-    const results: Array<Partial<User>> = (
+export type Friend = Pick<User, "id" | "username">;
+
+export async function getUserFriends(nextAuthAccessToken: string): Promise<Friend[]> {
+    const results: Friend[] = (
         await connection.query(
             "SET @user_id := (SELECT user_id FROM sessions WHERE (session_token = ? OR access_token = ?)); \
         SELECT int_users.id, int_users.username \
