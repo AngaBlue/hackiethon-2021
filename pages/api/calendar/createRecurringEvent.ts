@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const session = await getSession({ req });
 
     if (
-        session.accessToken &&
+        session?.accessToken &&
         typeof req.query.startTime == "string" &&
         typeof req.query.endTime == "string" &&
         typeof req.query.dayOfWeek == "number"

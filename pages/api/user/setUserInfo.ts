@@ -6,7 +6,7 @@ import { setUsername } from "../../../util/databaseRoutes";
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });
 
-    if (session.accessToken && typeof req.query.username == "string") {
+    if (session?.accessToken && typeof req.query.username == "string") {
         setUsername(session.accessToken, { username: req.query.username });
         res.status(200);
     } else {

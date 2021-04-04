@@ -7,7 +7,7 @@ import { getUserEvents, getUserFriends, getUsernameByID, getUserRecurringEvents 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });
 
-    if (session.accessToken) {
+    if (session?.accessToken) {
         const friends = await getUserFriends(session.accessToken);
         const availableFriends = [];
         for (const friend of friends) {
