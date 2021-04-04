@@ -3,9 +3,10 @@ import dayjs from "dayjs";
 import { UserWithNestedEvents } from "../../types/util";
 import connection from "./connection";
 import { getFriendEventsWithUserInfo } from "./getFriendEventsWithUserInfo";
+import { Friend, getUserFriends } from "./getUserFriends";
 
-export async function getAvailableFriends(nextAuthAccessToken: string): Promise<Array<UserWithNestedEvents>> {
-    const availableFriends: UserWithNestedEvents[] = [];
+export async function getAvailableFriends(nextAuthAccessToken: string): Promise<Array<Friend>> {
+    const userFriends = await getUserFriends(nextAuthAccessToken);
 
     const friendEvents = await getFriendEventsWithUserInfo(nextAuthAccessToken);
 
@@ -34,16 +35,14 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
         return prev;
     }, []);
 
+    let availableFriends = userFriends;
+
     for (const friend of friendsByEvent) {
-        let available = true;
         for (const event of friend.events) {
             if (dayjs(event.start_time).isBefore(dayjs()) && dayjs(event.end_time).isAfter(dayjs())) {
-                available = false;
+                availableFriends = availableFriends.filter((f) => f.id != friend.user_id);
+                break;
             }
-        }
-
-        if (available) {
-            availableFriends.push(friend);
         }
     }
 
