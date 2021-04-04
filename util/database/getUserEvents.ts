@@ -1,7 +1,7 @@
 import { CalendarEvents } from "../../types/database";
 import connection from "./connection";
 
-export async function getUserEvents(nextAuthAccessToken: string): Promise<Partial<CalendarEvents>[]> {
+export async function getUserEvents(nextAuthAccessToken: string): Promise<Array<CalendarEvents>> {
     const results: Array<CalendarEvents> = await connection.query(
         "SELECT ce.* FROM sessions as s \
         INNER JOIN user_events as ue \
