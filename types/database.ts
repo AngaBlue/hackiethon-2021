@@ -28,6 +28,17 @@ export interface CalendarEvents {
     utc_offset: number;
 }
 
+export interface CalendarEventsWithUserInfo {
+    id: number;
+    external_id: number;
+    start_time: string;
+    end_time: string;
+    utc_offset: number;
+    user_id: number;
+    username: string;
+    image: string;
+}
+
 export interface UserAuth {
     id: number;
     name: string;
