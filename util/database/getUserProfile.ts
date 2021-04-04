@@ -1,4 +1,3 @@
-import { User } from "../../types/database";
 import connection from "./connection";
 import { Friend } from "./getUserFriends";
 
@@ -10,10 +9,10 @@ export async function getUserProfile(nextAuthAccessToken: string): Promise<Frien
         FROM int_users \
         INNER JOIN sessions \
         ON int_users.id = sessions.user_id \
-        AND sessions.access_token = ? \
+        AND (sessions.access_token = ? OR sessions.session_token = ?) \
         INNER JOIN users AS u \
-        ON u.id = int_users.id \",
-        [nextAuthAccessToken]
+        ON u.id = int_users.id",
+        [nextAuthAccessToken, nextAuthAccessToken]
     );
 
     await connection.end();
