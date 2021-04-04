@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import { createConnection } from "mysql";
 
-import { UserInfoType } from "./types";
+import { Event, RecurringEvent, UserInfoType } from "./types";
 
 const connection = createConnection({
     host: process.env.DATABASE_URL,
@@ -35,7 +35,7 @@ export function setUsername(nextAuthAccessToken: string, userInfo: UserInfoType)
     return;
 }
 
-export function getUserFriends(nextAuthAccessToken: string): Array<string> {
+export function getUserFriends(nextAuthAccessToken: string): Array<number> {
     connection.query(
         "SELECT int_users.id, int_users.username, int_users.last_online \
         FROM (SELECT id FROM int_users WHERE id = [user ID]) AS int_users \
@@ -75,12 +75,52 @@ export function createNewUser(id: number, username: string): void {
     return;
 }
 
-export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs) {
+export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
     console.error("createEvent function is incomplete");
     return;
 }
 
-export function createRecurringEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs, dayOfWeek: number) {
+export function createRecurringEvent(
+    nextAuthAccessToken: string,
+    startTime: Dayjs,
+    endTime: Dayjs,
+    dayOfWeek: number
+): void {
     console.error("createRecurringEvent function is incomplete");
+    return;
+}
+
+export function deleteEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
+    console.error("deleteEvent function is incomplete");
+    return;
+}
+
+export function deleteRecurringEvent(
+    nextAuthAccessToken: string,
+    startTime: Dayjs,
+    endTime: Dayjs,
+    dayOfWeek: number
+): void {
+    console.error("deleteRecurringEvent function is incomplete");
+    return;
+}
+
+export function getUserEvents(id: number): Event[] {
+    console.error("getUserEvents function is incomplete");
+    return;
+}
+
+export function getUserRecurringEvents(id: number): RecurringEvent[] {
+    console.error("getUserRecurringEvents function is incomplete");
+    return;
+}
+
+export function getUsernameByID(id: number): string {
+    console.error("getUsernameByID function is incomplete");
+    return;
+}
+
+export function getIDByUsername(username: string): number {
+    console.error("getIDByUsername function is incomplete");
     return;
 }
