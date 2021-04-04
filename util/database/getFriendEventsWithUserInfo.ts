@@ -5,7 +5,7 @@ export async function getFriendEventsWithUserInfo(
     nextAuthAccessToken: string
 ): Promise<Array<CalendarEventsWithUserInfo>> {
     const results = await connection.query(
-            "SET @user_id := (SELECT user_id FROM sessions WHERE (session_token = ? OR access_token = ?)); \
+        "SET @user_id := (SELECT user_id FROM sessions WHERE (session_token = ? OR access_token = ?)); \
             SET time_zone = '+00:00'; \
             SELECT ce.*, friend_user.id AS user_id, friend_user.username AS username, u.image AS image \
             FROM int_users AS starting_user \
