@@ -12,8 +12,8 @@ interface ServerSideProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
-    const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
-    const availableFriends: getFriendsAvailabilityResponse = await res.json();
+    // const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
+    // const availableFriends: getFriendsAvailabilityResponse = await res.json();
     return {
         props: {
             availableFriends: []
@@ -34,7 +34,7 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                             </div>
                         ))
                     ) : (
-                        <p className="text-center p-4 w-full">
+                        <p className="text-center px-4 py-16 w-full">
                             Looks like everyone&apos;s busy right now :(
                             <br />
                             Come back later to find someone to hang out with!
@@ -42,7 +42,7 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                     )}
                 </Card>
                 <Card title="Friend Requests">
-                    <p className="text-center p-4">You got no friends.</p>
+                    <p className="text-center px-4 py-16">You don&apos;t have any pending friend requests.</p>
                 </Card>
             </div>
         </>
