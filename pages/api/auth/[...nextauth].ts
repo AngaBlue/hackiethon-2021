@@ -42,7 +42,6 @@ export default NextAuth({
     },
     events: {
         async createUser(message) {
-            console.log(message);
             createNewUser(message.id, message.name + message.id);
         }
     }

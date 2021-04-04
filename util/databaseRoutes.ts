@@ -1,7 +1,8 @@
 import { Dayjs } from "dayjs";
 import serverlessMySQL from "serverless-mysql";
 
-import { Event, RecurringEvent, UserInfoType } from "./types";
+import { CalendarEvents, Session, User } from "./databaseTypes";
+import { RecurringEvent, UserInfoType } from "./types";
 
 const connection = serverlessMySQL({
     config: {
@@ -16,7 +17,9 @@ const connection = serverlessMySQL({
 
 // Returns username based off nextAuthID
 export async function getUsername(nextAuthAccessToken: string): Promise<string> {
-    const results: any[] = await connection.query(
+    const results: Array<
+        Partial<User>
+    > = await connection.query(
         "SELECT sessions.id, int_users.username \
         FROM int_users \
         INNER JOIN sessions \
@@ -49,7 +52,9 @@ export async function setUsername(nextAuthAccessToken: string, userInfo: UserInf
 }
 
 export async function getUserFriends(nextAuthAccessToken: string): Promise<Array<number>> {
-    const results = await connection.query(
+    const results: Array<
+        Partial<User>
+    > = await connection.query(
         "SET @user_id = (SELECT user_id FROM sessions WHERE access_token = ?); \
         SELECT int_users.id, int_users.username \
         FROM int_users \
@@ -66,7 +71,9 @@ export async function getUserFriends(nextAuthAccessToken: string): Promise<Array
 }
 
 export async function getUserID(nextAuthAccessToken: string): Promise<number> {
-    const results = await connection.query("SELECT user_id \
+    const results: Array<
+        Partial<Session>
+    > = await connection.query("SELECT user_id \
         FROM sessions \
         WHERE access_token = ?;", [
         nextAuthAccessToken
@@ -130,8 +137,10 @@ export function deleteRecurringEvent(
     return;
 }
 
-export async function getUserEvents(id: number): Promise<Event[]> {
-    const results = await connection.query(
+export async function getUserEvents(id: number): Promise<Partial<CalendarEvents>[]> {
+    const results: Array<
+        Partial<CalendarEvents>
+    > = await connection.query(
         "SELECT ce.* FROM calendar_events as ce \
         INNER JOIN user_events as ue \
         ON (ce.id = ue.event_id AND ue.user_id = ?);",
@@ -150,7 +159,7 @@ export function getUserRecurringEvents(id: number): RecurringEvent[] {
 }
 
 export async function getUsernameByID(id: number): Promise<string> {
-    const results = await connection.query("SELECT username FROM int_users WHERE id = ?", [id]);
+    const results: Array<Partial<User>> = await connection.query("SELECT username FROM int_users WHERE id = ?", [id]);
 
     await connection.end();
 
@@ -163,7 +172,9 @@ export async function getUsernameByID(id: number): Promise<string> {
 }
 
 export async function getIDByUsername(username: string): Promise<number> {
-    const results = await connection.query("SELECT id FROM int_users WHERE username = ?", [username]);
+    const results: Array<Partial<User>> = await connection.query("SELECT id FROM int_users WHERE username = ?", [
+        username
+    ]);
 
     await connection.end();
 
