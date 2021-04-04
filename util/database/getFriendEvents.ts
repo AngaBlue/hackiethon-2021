@@ -5,7 +5,6 @@ import { getUserID } from "./getUserID";
 import { CalendarEvents } from "../../types/database";
 
 export async function getFriendEvents(nextAuthAccessToken: string): Promise<Array<CalendarEvents>> {
-    console.log(nextAuthAccessToken);
     const results: Array<CalendarEvents> = (
         await connection.query(
             "SET @user_id := (SELECT user_id FROM sessions WHERE (session_token = ? OR access_token = ?)); \

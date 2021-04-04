@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     if (session?.accessToken && typeof req.query.startTime == "string" && typeof req.query.endTime == "string") {
         createEvent(session.accessToken, dayjs(req.query.startTime), dayjs(req.query.endTime));
-        res.status(200);
+        res.status(200).json({});
     } else {
         res.status(500).json({});
     }
