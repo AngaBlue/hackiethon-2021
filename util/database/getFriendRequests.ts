@@ -1,6 +1,5 @@
 import { User, UserAuth } from "../../types/database";
 import connection from "./connection";
-import { getUserID } from "./getUserID";
 
 export type FriendRequestData = Pick<User, "id" | "username"> & Pick<UserAuth, "image">;
 

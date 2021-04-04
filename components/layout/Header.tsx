@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useSession } from "next-auth/client";
 import React from "react";
 
+import Avatar from "../Avatar";
 import LoginButton from "../LoginButton";
-import UserCard from "../UserCard";
 
 export default function Header(): JSX.Element {
     const [session] = useSession();
@@ -12,7 +12,7 @@ export default function Header(): JSX.Element {
             <Link href="/">
                 <img src="/logo-banner.svg" alt="Logo Banner" className="cursor-pointer" />
             </Link>
-            {session ? <UserCard name={session.user.name} image={session.user.image} /> : <LoginButton />}
+            {session ? <Avatar name={session.user.name} image={session.user.image} /> : <LoginButton />}
         </header>
     );
 }

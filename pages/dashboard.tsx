@@ -15,7 +15,7 @@ interface ServerSideProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ctx) => {
-    const token = ctx.req.cookies["next-auth.session-token"];
+    const token = ctx.req.cookies["next-auth.session-token"] || ctx.req.cookies["__Secure-next-auth.session-token"];
     const [availableFriends] = await Promise.all([getAvailableFriends(token)]);
     return {
         props: {
