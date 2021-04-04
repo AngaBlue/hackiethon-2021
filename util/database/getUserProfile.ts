@@ -5,7 +5,7 @@ import { Friend } from "./getUserFriends";
 
 export async function getUserProfile(nextAuthAccessToken: string): Promise<Friend> {
     const results: Array<Friend> = await connection.query(
-        "SELECT sessions.user_id, int_users.username, u.image \
+        "SELECT sessions.user_id AS id, int_users.username, u.image \
         FROM int_users \
         INNER JOIN sessions \
         ON int_users.id = sessions.user_id \
