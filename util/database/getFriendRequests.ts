@@ -5,12 +5,16 @@ import { getUserID } from "./getUserID";
 export type FriendRequestData = Pick<User, "id" | "username"> & Pick<UserAuth, "image">;
 
 export async function getFriendRequests(nextAuthAccessToken: string): Promise<Array<FriendRequestData>> {
-    const userID = await getUserID(nextAuthAccessToken);
     const results: Array<FriendRequestData> = await connection.query(
-        "SELECT u.id, u.name AS username, u.image FROM int_user_relationships AS rel \
+        "SELECT u.id, iu.username AS username, u.image FROM sessions AS s \
+        INNER JOIN int_user_relationships AS rel \
+            ON rel.secondary = s.user_id AND rel.confirmed = FALSE \
         INNER JOIN users AS u \
-            ON rel.secondary = ? AND rel.confirmed = FALSE AND rel.main = u.id",
-        [userID]
+            ON rel.main = u.id \
+        INNER JOIN int_users as iu \
+            ON u.id = iu.id \
+        WHERE (s.access_token = ? OR s.session_token = ?)",
+        [nextAuthAccessToken, nextAuthAccessToken]
     );
 
     await connection.end();
