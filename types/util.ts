@@ -10,7 +10,7 @@ export class UserWithNestedEvents {
     image: string;
     events: CalendarEvents[];
 
-    constructor (user_id: number, username: string, image: string) {
+    constructor(user_id: number, username: string, image: string) {
         this.user_id = user_id;
         this.username = username;
         this.image = image;

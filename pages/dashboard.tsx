@@ -6,26 +6,24 @@ import Head from "../components/layout/Head";
 import { Secured } from "../components/Secured";
 import UserCard from "../components/UserCard";
 import styles from "../styles/pages/dashboard.module.scss";
-import { getFriendsAvailabilityResponse } from "./api/calendar/getFriendsAvailabilityNow";
+import { PromiseResolvedType } from "../types/util";
+import { getAvailableFriends } from "../util/database/getAvailableFriends";
+import plainObject from "../util/plainObject";
 
 interface ServerSideProps {
-    availableFriends: getFriendsAvailabilityResponse;
+    availableFriends: PromiseResolvedType<ReturnType<typeof getAvailableFriends>>;
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ctx) => {
-    // const res = await fetch(
-    //     `http://localhost:3000/api/calendar/getFriendsAvailabilityNow?access=${ctx.req.cookies["next-auth.session-token"]}`
-    // );
-    // const availableFriends: getFriendsAvailabilityResponse = await res.json();
+    const token = ctx.req.cookies["next-auth.session-token"];
     return {
         props: {
-            availableFriends: []
+            availableFriends: plainObject(await getAvailableFriends(token))
         }
     };
 };
 
 const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
-    availableFriends = [{ name: "Test", image: "" }];
     return (
         <>
             <Head title="Dashboard" />
@@ -35,9 +33,12 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                         <div className="p-4">
                             {availableFriends.map((friend) => (
                                 <div
-                                    key={friend.name}
+                                    key={friend.username}
                                     className="flex items-center justify-between border-b border-white">
-                                    <UserCard {...friend} className="mr-4 inline-flex" />
+                                    <UserCard
+                                        {...{ name: friend.username, image: friend.image }}
+                                        className="mr-4 inline-flex"
+                                    />
                                     <div
                                         className={`bg-green-500 rounded-full h-4 w-4 ${styles.indicator} inline-block`}
                                     />

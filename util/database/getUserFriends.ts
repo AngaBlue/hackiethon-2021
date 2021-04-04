@@ -1,7 +1,7 @@
 import { User, UserAuth } from "../../types/database";
 import connection from "./connection";
 
-export type Friend = Pick<User, "id" | "username"> & Pick<UserAuth, "image">
+export type Friend = Pick<User, "id" | "username"> & Pick<UserAuth, "image">;
 
 export async function getUserFriends(nextAuthAccessToken: string): Promise<Friend[]> {
     const results: Friend[] = (
