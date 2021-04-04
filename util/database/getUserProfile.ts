@@ -1,10 +1,11 @@
 import { User } from "../../types/database";
 import connection from "./connection";
+import { Friend } from "./getUserFriends";
 
-export async function getUserProfile(nextAuthAccessToken: string): Promise<string> {
-    const results: Array<
-        Partial<User>
-    > = await connection.query(
+
+
+export async function getUserProfile(nextAuthAccessToken: string): Promise<Friend> {
+    const results: Array<Friend> = await connection.query(
         "SELECT sessions.user_id, int_users.username, int_users.image \
         FROM int_users \
         INNER JOIN sessions \
@@ -16,7 +17,7 @@ export async function getUserProfile(nextAuthAccessToken: string): Promise<strin
     await connection.end();
 
     if (results.length != 1) {
-        return "";
+        // should probably throw or something no idea at this point
     }
 
     return results[0];
