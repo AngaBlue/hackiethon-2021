@@ -1,14 +1,15 @@
 import { CalendarEvents } from "../../types/database";
 import connection from "./connection";
 
-export async function getUserEvents(id: number): Promise<Partial<CalendarEvents>[]> {
-    const results: Array<
-        Partial<CalendarEvents>
-    > = await connection.query(
-        "SELECT ce.* FROM calendar_events as ce \
+export async function getUserEvents(nextAuthAccessToken: string): Promise<Partial<CalendarEvents>[]> {
+    const results: Array<CalendarEvents> = await connection.query(
+        "SELECT ce.* FROM sessions as s \
         INNER JOIN user_events as ue \
-        ON (ce.id = ue.event_id AND ue.user_id = ?);",
-        [id]
+            ON ue.user_id = s.user_id \
+        INNER JOIN calendar_events as ce \
+            ON (ce.id = ue.event_id AND ue.user_id = s.user_id) \
+        WHERE (s.access_token = ? OR s.session_token = ?);",
+        [nextAuthAccessToken, nextAuthAccessToken]
     );
 
     await connection.end();
