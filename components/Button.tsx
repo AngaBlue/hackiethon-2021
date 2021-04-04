@@ -1,11 +1,10 @@
-type ButtonType = "default" | "warning" | "danger" | "primary";
+type ButtonType = "warning" | "danger" | "primary";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant: ButtonType;
 }
 
 const colour: { [key in ButtonType]: string } = {
-    default: "bg-blue-100",
     primary: "bg-blue-600",
     danger: "bg-red-600",
     warning: "bg-yellow-600"
