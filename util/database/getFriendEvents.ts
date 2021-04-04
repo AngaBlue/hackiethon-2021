@@ -1,8 +1,5 @@
-import { UserRelationship } from "../../types/database";
-import { User } from "../../types/database";
-import connection from "./connection";
-import { getUserID } from "./getUserID";
 import { CalendarEvents } from "../../types/database";
+import connection from "./connection";
 
 export async function getFriendEvents(nextAuthAccessToken: string): Promise<Array<CalendarEvents>> {
     const results: Array<CalendarEvents> = (
