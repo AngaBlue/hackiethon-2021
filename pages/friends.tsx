@@ -37,15 +37,14 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
 
     function deleteFriend(id: Friend["id"]) {
         const index = state.findIndex((f) => f.id === id);
-        if (index > -1) {
-            state.splice(index, 1);
-        }
+        if (index > -1) state.splice(index, 1);
         setState([...state]);
     }
 
-    function deleteRequest(id: Friend["id"]) {
+    function deleteRequest(id: Friend["id"], accept = false) {
         const index = reqs.findIndex((f) => f.id === id);
         if (index > -1) {
+            if (accept) setState([...state, reqs[index]]);
             reqs.splice(index, 1);
         }
         setReqs([...reqs]);

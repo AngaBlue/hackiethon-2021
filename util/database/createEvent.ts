@@ -6,7 +6,6 @@ import { getUserID } from "./getUserID";
 const MYSQL_DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 export async function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): Promise<number> {
-
     const userId = await getUserID(nextAuthAccessToken);
     // Create new event and persist event ID
     // Use event ID to create new mapping between user and event

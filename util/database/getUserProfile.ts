@@ -1,8 +1,6 @@
 import connection from "./connection";
 import { Friend } from "./getUserFriends";
 
-
-
 export async function getUserProfile(nextAuthAccessToken: string): Promise<Friend> {
     const results: Array<Friend> = await connection.query(
         "SELECT sessions.user_id, int_users.username, u.image \

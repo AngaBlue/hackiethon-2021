@@ -6,7 +6,7 @@ import getHost from "../util/getHost";
 import Button from "./Button";
 
 interface FriendEntryProps extends Friend {
-    deleteRequest(id: Friend["id"], accept: boolean): void;
+    deleteRequest(id: Friend["id"], accept?: boolean): void;
 }
 
 export default function FriendEntry(props: FriendEntryProps): JSX.Element {
