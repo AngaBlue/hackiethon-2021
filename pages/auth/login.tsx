@@ -24,7 +24,11 @@ export default function SignIn({ providers }: SignInProps): JSX.Element {
                     </p>
                     {Object.values(providers).map((provider) => (
                         <div key={provider.name}>
-                            <Button variant="primary" onClick={() => signIn(provider.id)} className="w-64 mb-4">
+                            <Button
+                                variant="primary"
+                                onClick={() => signIn(provider.id)}
+                                className="mb-4"
+                                style={{ width: "16rem" }}>
                                 Log in with {provider.name}
                             </Button>
                         </div>

@@ -12,7 +12,9 @@ const settings = function (): JSX.Element {
             <Head title="Settings" />
             <div className="p-4">
                 <Title>Settings</Title>
-                <span className="font-bold">Email:</span> <span>{session.user.email}</span>
+                <div>
+                    <span className="font-bold">Email:</span> <span>{session.user.email}</span>
+                </div>
             </div>
         </>
     );
