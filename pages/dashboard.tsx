@@ -6,6 +6,7 @@ import Card from "../components/Card";
 import Head from "../components/layout/Head";
 import { Secured } from "../components/Secured";
 import UserCard from "../components/UserCard";
+import styles from "../styles/pages/dashboard.module.scss";
 import { getFriendsAvailabilityResponse } from "./api/calendar/getFriendsAvailabilityNow";
 
 interface ServerSideProps {
@@ -25,6 +26,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ct
 };
 
 const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
+    availableFriends = [{ name: "Test", image: "" }];
     return (
         <>
             <Head title="Dashboard" />
@@ -35,7 +37,7 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                             {availableFriends.map((friend) => (
                                 <div key={friend.name}>
                                     <UserCard {...friend} className="mr-4" />
-                                    <div className="bg-green-500 rounded-full h-2 w-2" />
+                                    <div className={`bg-green-500 rounded-full h-2 w-2 ${styles.indicator}`} />
                                 </div>
                             ))}
                         </div>

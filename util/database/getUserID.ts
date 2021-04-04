@@ -17,5 +17,5 @@ export async function getUserID(nextAuthAccessToken: string): Promise<number> {
         return -1;
     }
 
-    return results[0].userId;
+    return results[0].user_id;
 }

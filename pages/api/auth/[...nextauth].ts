@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
-import { createNewUser } from "../../../util/databaseRoutes";
+import { createNewUser } from "../../../util/database/createNewUser";
 
 export default NextAuth({
     providers: [
