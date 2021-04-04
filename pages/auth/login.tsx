@@ -25,7 +25,7 @@ export default function SignIn({ providers }: SignInProps): JSX.Element {
                     {Object.values(providers).map((provider) => (
                         <div key={provider.name}>
                             <Button variant="primary" onClick={() => signIn(provider.id)} className="w-64 mb-4">
-                                Sign in with {provider.name}
+                                Log in with {provider.name}
                             </Button>
                         </div>
                     ))}

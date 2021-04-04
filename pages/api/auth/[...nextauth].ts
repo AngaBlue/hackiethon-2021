@@ -33,6 +33,9 @@ export default NextAuth({
         database: process.env.DATABASE_NAME
     },
     pages: {
-        signIn: "/auth/signin"
+        signIn: "/auth/login",
+        newUser: "/dashboard",
+        signOut: "/auth/logout",
+        error: "/auth/error"
     }
 });
