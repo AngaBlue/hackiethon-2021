@@ -1,18 +1,15 @@
 import React from "react";
 
 import Head from "../components/layout/Head";
-import { Secured } from "../components/Secured";
 import Title from "../components/Title";
 
-const friends = function (): JSX.Element {
+export default function timetable(): JSX.Element {
     return (
         <>
-            <Head title="Friends" />
+            <Head title="Timetable" />
             <div className="p-4">
-                <Title>Friends</Title>
+                <Title>Timetable</Title>
             </div>
         </>
     );
-};
-
-export default Secured(friends);
+}

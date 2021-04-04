@@ -1,7 +1,18 @@
+import React from "react";
+
+import Head from "../components/layout/Head";
 import { Secured } from "../components/Secured";
+import Title from "../components/Title";
 
 const settings = function (): JSX.Element {
-    return <div></div>;
+    return (
+        <>
+            <Head title="Settings" />
+            <div className="p-4">
+                <Title>Settings</Title>
+            </div>
+        </>
+    );
 };
 
 export default Secured(settings);
