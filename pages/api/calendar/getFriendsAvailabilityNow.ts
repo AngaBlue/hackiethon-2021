@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
             const friendRecurringEvents = await getUserRecurringEvents(friend);
 
             for (const event of friendEvents) {
-                if (event.startTime.isBefore(dayjs()) && event.endTime.isAfter(dayjs())) {
+                if (dayjs(event.start_time).isBefore(dayjs()) && dayjs(event.end_time).isAfter(dayjs())) {
                     available = false;
                 }
             }
