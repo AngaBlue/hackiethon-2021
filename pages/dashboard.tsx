@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 import React from "react";
 
 import Card from "../components/Card";
@@ -12,12 +12,11 @@ interface ServerSideProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
-    const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
-    const availableFriends: getFriendsAvailabilityResponse = await res.json();
-    console.log(availableFriends);
+    // const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
+    // const availableFriends: getFriendsAvailabilityResponse = await res.json();
     return {
         props: {
-            availableFriends
+            availableFriends: []
         }
     };
 };
