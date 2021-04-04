@@ -10,7 +10,7 @@ export async function getUserFriends(nextAuthAccessToken: string): Promise<Frien
         SELECT int_users.id, int_users.username, u.image \
         FROM int_users \
         INNER JOIN int_user_relationships AS rel \
-            ON (int_users.id = rel.main AND rel.main = @user_id) \
+            ON (int_users.id = rel.main AND rel.secondary = @user_id) \
             OR (int_users.id = rel.secondary AND rel.main = @user_id) \
         INNER JOIN users AS u \
             ON u.id = int_users.id \
