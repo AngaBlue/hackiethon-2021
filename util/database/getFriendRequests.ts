@@ -1,9 +1,8 @@
-import connection from "./connection";
 import { User, UserAuth } from "../../types/database";
+import connection from "./connection";
 import { getUserID } from "./getUserID";
-import { getUsernameByID } from "./getUsernameByID";
 
-export type FriendRequestData = Pick<User, "id" | "username"> & Pick<UserAuth, "image">
+export type FriendRequestData = Pick<User, "id" | "username"> & Pick<UserAuth, "image">;
 
 export async function getFriendRequests(nextAuthAccessToken: string): Promise<Array<FriendRequestData>> {
     const userID = await getUserID(nextAuthAccessToken);
