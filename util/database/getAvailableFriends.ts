@@ -47,10 +47,10 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
             // Compensate for JS dates not containing timezone data and thus treating it as though it's local time
             if (
                 dayjs(event.start_time)
-                    .add(0 - event.start_time.getTimezoneOffset(), "minute")
+                    .add(0 - event.start_time.getTimezoneOffset() + event.utc_offset, "minute")
                     .isBefore(dayjs()) &&
                 dayjs(event.end_time)
-                    .add(0 - event.end_time.getTimezoneOffset(), "minute")
+                    .add(0 - event.end_time.getTimezoneOffset() + event.utc_offset, "minute")
                     .isAfter(dayjs())
             ) {
                 availableFriends = availableFriends.filter((f) => f.id != friend.user_id);
