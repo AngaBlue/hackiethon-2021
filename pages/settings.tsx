@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ct
     const [profile] = await Promise.all([getUserProfile(token)]);
     return {
         props: {
-            profile: plainObject(profile)
+            profile: profile ? plainObject(profile) : null
         }
     };
 };
