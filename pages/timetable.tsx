@@ -61,7 +61,7 @@ export default function timetable({ events }: ServerSideProps): JSX.Element {
             <Head title="Timetable" />
             <div className="p-4">
                 <Title>Your Events</Title>
-                {state.length > 1 ? (
+                {state.length > 0 ? (
                     <div className="mb-4">
                         {state.map((e) => (
                             <EventEntry key={e.id} {...e} deleteEvent={deleteEvent} />

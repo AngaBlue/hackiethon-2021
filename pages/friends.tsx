@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ct
 
 const friends = function ({ friends, requests }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
     const [state, setState] = useState(friends);
-    const [reqs, setReqs] = useState(friends);
+    const [reqs, setReqs] = useState(requests);
     const [friend, setFriend] = useState(AsyncState(""));
 
     function deleteFriend(id: Friend["id"]) {
@@ -74,7 +74,7 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
             <Head title="Friends" />
             <div className="p-4">
                 <Title>Friends</Title>
-                {friends.length > 0 ? (
+                {state.length > 0 ? (
                     <div className="mb-4">
                         {state.map((friend) => (
                             <FriendEntry {...{ deleteFriend }} {...friend} key={friend.id} />
