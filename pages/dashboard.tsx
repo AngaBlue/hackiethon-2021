@@ -37,7 +37,7 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                             {availableFriends.map((friend) => (
                                 <div
                                     key={friend.name}
-                                    className="flex items-center justify-between border-b border-gray-100">
+                                    className="flex items-center justify-between border-b border-white">
                                     <UserCard {...friend} className="mr-4 inline-flex" />
                                     <div
                                         className={`bg-green-500 rounded-full h-4 w-4 ${styles.indicator} inline-block`}

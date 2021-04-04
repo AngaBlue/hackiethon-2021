@@ -1,6 +1,6 @@
-.blink_me {
+.indicator {
     opacity: 1;
-    animation: flash 1s linear infinite;
+    animation: flash 2s ease infinite;
 }
 
 @keyframes flash {
