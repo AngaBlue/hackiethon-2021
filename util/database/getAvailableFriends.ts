@@ -1,15 +1,16 @@
 import dayjs from "dayjs";
+
 import { UserWithNestedEvents } from "../../types/util";
 import { getFriendEventsWithUserInfo } from "./getFriendEventsWithUserInfo";
 
 export async function getAvailableFriends(nextAuthAccessToken: string): Promise<Array<UserWithNestedEvents>> {
-    const availableFriends: UserWithNestedEvents[] = new Array();
+    const availableFriends: UserWithNestedEvents[] = [];
 
     const friendEvents = await getFriendEventsWithUserInfo(nextAuthAccessToken);
 
-    let friendEventsSorted = friendEvents.sort((a, b) => (a.user_id > b.user_id ? 1 : -1));
-    let friendsByEvent: UserWithNestedEvents[] = friendEventsSorted.reduce((prev, curr) => {
-        let filtered_results = prev.filter((p) => p.user_id == curr.user_id);
+    const friendEventsSorted = friendEvents.sort((a, b) => (a.user_id > b.user_id ? 1 : -1));
+    const friendsByEvent: UserWithNestedEvents[] = friendEventsSorted.reduce((prev, curr) => {
+        const filtered_results = prev.filter((p) => p.user_id == curr.user_id);
         let current_obj: UserWithNestedEvents;
 
         if (filtered_results.length == 0) {
@@ -28,7 +29,7 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
         });
 
         return prev;
-    }, new Array());
+    }, []);
 
     for (const friend of friendsByEvent) {
         let available = true;

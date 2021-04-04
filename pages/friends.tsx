@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React, { useState } from "react";
-import FriendEntry from "../components/FriendEntry";
 
+import FriendEntry from "../components/FriendEntry";
 import Head from "../components/layout/Head";
 import { Secured } from "../components/Secured";
 import Title from "../components/Title";
@@ -71,7 +71,7 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center">You don't have any friends.</p>
+                    <p className="text-center">You don&apos;t have any friends.</p>
                 )}
                 <Title>Add Friend</Title>
                 <p className="mb-4">
@@ -91,7 +91,7 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
                         ))} */}
                     </div>
                 ) : (
-                    <p className="text-center">You don't have any friend requests.</p>
+                    <p className="text-center">You don&apos;t have any friend requests.</p>
                 )}
             </div>
         </>
