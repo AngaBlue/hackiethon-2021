@@ -3,79 +3,95 @@ import { createConnection } from "mysql";
 
 import { Event, RecurringEvent, UserInfoType } from "./types";
 
-const connection = createConnection({
-    host: process.env.DATABASE_URL,
-    user: process.env.DATABASE_ID,
-    password: process.env.DATABASE_SECRET,
-    database: process.env.DATABASE_NAME
+const connection = require('serverless-mysql')({
+    config: {
+        host:     process.env.DATABASE_URL,
+        user:     process.env.DATABASE_ID,
+        password: process.env.DATABASE_SECRET,
+        database: process.env.DATABASE_NAME
+    }
 });
 
 // NOTHING IN HERE HAS YET BEEN TESTED
 
 // Returns username based off nextAuthID
-export function getUsername(nextAuthAccessToken: string): string {
-    connection.query(
+export async function getUsername(nextAuthAccessToken: string): Promise<string> {
+    let results = await connection.query(
         "SELECT sessions.id, int_users.username \
         FROM int_users \
         INNER JOIN sessions \
         ON int_users.id = sessions.user_id \
-        AND sessions.access_token = [nextAuthAccessToken]",
-        function (error, results, fields) {
-            if (error) throw error;
-            // connected!
-        }
+        AND sessions.access_token = ?", [nextAuthAccessToken]
     );
-    console.error("getUsername function is incomplete");
+
+    await connection.end();
+    
+    if (results.length != 1) {
+        return "";
+    }
+    
+    return results[0].username;
+}
+
+export async function setUsername(nextAuthAccessToken: string, userInfo: UserInfoType): Promise<void> {
+    await connection.query(
+        "UPDATE social_motion_dev.int_users \
+        INNER JOIN sessions \
+            ON sessions.user_id = int_users.id \
+            AND sessions.access_token = ? \
+        SET int_users.username = ?;",
+        [nextAuthAccessToken, userInfo.username]
+    );
+
+    await connection.end();
     return;
 }
 
-export function setUsername(nextAuthAccessToken: string, userInfo: UserInfoType): void {
-    // Should set the username by userID
-    console.error("setUsername function is incomplete");
-    return;
-}
-
-export function getUserFriends(nextAuthAccessToken: string): Array<number> {
-    connection.query(
-        "SELECT int_users.id, int_users.username, int_users.last_online \
-        FROM (SELECT id FROM int_users WHERE id = [user ID]) AS int_users \
+export async function getUserFriends(nextAuthAccessToken: string): Promise<Array<number>> {
+    let results = await connection.query(
+        "SET @user_id = (SELECT user_id FROM sessions WHERE access_token = ?); \
+        SELECT int_users.id, int_users.username \
+        FROM int_users \
         INNER JOIN int_user_relationships AS rel \
-        ON int_users.id = rel.primary \
-        OR int_users.id = rel.secondary \
-        WHERE int_users.id <> [user ID];",
-        function (error, results, fields) {
-            if (error) throw error;
-            // connected!
-        }
+            ON (int_users.id = rel.main AND rel.main = @user_id) \
+            OR (int_users.id = rel.secondary AND rel.main = @user_id) \
+        WHERE int_users.id <> @user_id;",
+        [nextAuthAccessToken]
     );
-    console.error("getUserFriends function is incomplete");
-    return;
+
+    await connection.end();
+
+    return results.map(r => r.id);
 }
 
-export function getUserID(nextAuthAccessToken: string): number {
-    connection.query(
+export async function getUserID(nextAuthAccessToken: string): Promise<number> {
+    let results = await connection.query(
         "SELECT user_id \
         FROM sessions \
-        WHERE access_token = [nextAuthAccessToken];",
-        function (error, results, fields) {
-            if (error) throw error;
-            // connected!
-        }
+        WHERE access_token = ?;",
+        [nextAuthAccessToken]
     );
-    console.error("getUserFriends function is incomplete");
+
+    await connection.end();
+
+    if (results.length != 1) {
+        return -1;
+    }
+    
+    return results[0].user_id;
+}
+
+export async function createNewUser(id: number, username: string): Promise<void> {
+    await connection.query("INSERT INTO int_users (id, username, last_login) VALUES (?, ?, NOW());", [id, username]);
+
+    await connection.end();
+
     return;
 }
 
-export function createNewUser(id: number, username: string): void {
-    connection.query("", function (error, results, fields) {
-        if (error) throw error;
-        // connected!
-    });
-    console.error("createNewUser function is incomplete");
-    return;
-}
-
-export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
+export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): Promise<number> {
+    // Create new event and persist event ID
+    // Use event ID to create new mapping between user and event
     console.error("createEvent function is incomplete");
     return;
 }
@@ -86,11 +102,19 @@ export function createRecurringEvent(
     endTime: Dayjs,
     dayOfWeek: number
 ): void {
+    // Needs database schema update
+    // Create new event with recurring flag set to true and specified repeat frequency
+    // Maybe roll into createEvent with mandatory recurring boolean parameter?
     console.error("createRecurringEvent function is incomplete");
     return;
 }
 
 export function deleteEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
+    // TODO: Change this to accept an event ID
+    // Check if event ID has mapping to user ID
+    // If so, remove mapping and check if any further mappings to that event ID exist
+    // If none, then delete event
+    // Otherwise, event should remain in db as it's being used by other users
     console.error("deleteEvent function is incomplete");
     return;
 }
@@ -101,26 +125,58 @@ export function deleteRecurringEvent(
     endTime: Dayjs,
     dayOfWeek: number
 ): void {
+    // Same as deleteEvent but may change depending on how recurring events are stored in the DB
     console.error("deleteRecurringEvent function is incomplete");
     return;
 }
 
-export function getUserEvents(id: number): Event[] {
-    console.error("getUserEvents function is incomplete");
-    return;
+export async function getUserEvents(id: number): Promise<Event[]> {
+    let results = await connection.query(
+        "SELECT ce.* FROM calendar_events as ce \
+        INNER JOIN user_events as ue \
+        ON (ce.id = ue.event_id AND ue.user_id = ?);",
+        [id]
+    );
+
+    await connection.end();
+
+    return results;
 }
 
 export function getUserRecurringEvents(id: number): RecurringEvent[] {
+    // TODO: Figure out how to store recurring events
     console.error("getUserRecurringEvents function is incomplete");
     return;
 }
 
-export function getUsernameByID(id: number): string {
-    console.error("getUsernameByID function is incomplete");
-    return;
+export async function getUsernameByID(id: number): Promise<string> {
+    let results = await connection.query(
+        "SELECT username FROM int_users WHERE id = ?",
+        [id]
+    );
+
+    await connection.end();
+
+    if (results.length != 1) {
+        // Should throw?
+        return "";
+    }
+    
+    return results[0].username;
 }
 
-export function getIDByUsername(username: string): number {
-    console.error("getIDByUsername function is incomplete");
-    return;
+export async function getIDByUsername(username: string): Promise<number> {
+    let results = await connection.query(
+        "SELECT id FROM int_users WHERE username = ?",
+        [username]
+    );
+
+    await connection.end();
+
+    if (results.length != 1) {
+        // Should throw?
+        return -1;
+    }
+    
+    return results[0].id;
 }
