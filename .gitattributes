@@ -1,4 +1,4 @@
-* text=auto
+text eol=lf 
 *.ts text
 *.tsx text
 *.js text
