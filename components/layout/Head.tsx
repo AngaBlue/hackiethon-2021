@@ -7,7 +7,7 @@ interface HeadProps {
 
 export default function Head(props: HeadProps): JSX.Element {
     const title = `Social Motion | ${props.title}`;
-    const description = props.description || "Social Motion.  See when your freinds are around to hang out!";
+    const description = props.description || "Social Motion.  See when your friends are around to hang out!";
     return (
         <NextHead>
             <title>{title}</title>
