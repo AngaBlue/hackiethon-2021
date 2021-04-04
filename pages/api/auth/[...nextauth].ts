@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
+import { createNewUser } from "../../../util/databaseRoutes";
+
 export default NextAuth({
     providers: [
         Providers.Google({
@@ -37,5 +39,10 @@ export default NextAuth({
         newUser: "/dashboard",
         signOut: "/auth/logout",
         error: "/auth/error"
+    },
+    events: {
+        async createUser(message) {
+            createNewUser(message.User.id, message.User.name + message.User.id);
+        }
     }
 });
