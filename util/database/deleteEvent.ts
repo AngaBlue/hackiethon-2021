@@ -14,6 +14,5 @@ export function deleteEvent(nextAuthAccessToken: string, eventId: number): Promi
         DELETE FROM calendar_events WHERE id = 1 and (SELECT COUNT(*) FROM user_events WHERE event_id = 1) = 0;",
         [eventId, userId, eventId, eventId]
     );
-    console.error("deleteEvent function is incomplete");
     return;
 }
