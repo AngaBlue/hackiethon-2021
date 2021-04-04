@@ -7,7 +7,7 @@ export async function getFriendRequests(nextAuthAccessToken: string): Promise<Ar
     const userID = await getUserID(nextAuthAccessToken);
     const results: Array<
         Partial<UserRelationship>
-    > = await connection.query("SELECT main FROM int_users_relationships WHERE confirmed = false AND secondary = ?", [
+    > = await connection.query("SELECT main FROM int_user_relationships WHERE confirmed = false AND secondary = ?", [
         userID
     ]);
 

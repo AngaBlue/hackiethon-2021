@@ -6,9 +6,11 @@ import { requestNewFriend } from "../../../util/database/requestNewFriend";
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });
 
+    console.log(req.query);
+
     if (session?.accessToken && typeof req.query.friendID == "string") {
         requestNewFriend(session.accessToken, Number(req.query.friendID));
-        res.status(200);
+        res.status(200).json({});
     } else {
         res.status(500).json({});
     }
