@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+
 import { CalendarEvents } from "../types/database";
 
 export type PromiseResolvedType<T> = T extends Promise<infer R> ? R : never;
@@ -14,6 +15,6 @@ export class UserWithNestedEvents {
         this.user_id = user_id;
         this.username = username;
         this.image = image;
-        this.events = new Array();
+        this.events = [];
     }
 }
