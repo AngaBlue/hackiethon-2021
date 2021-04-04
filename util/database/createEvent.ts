@@ -17,6 +17,7 @@ export async function createEvent(
 
     const db_startTime = startTime.format(MYSQL_DATE_TIME_FORMAT);
     const db_endTime = endTime.format(MYSQL_DATE_TIME_FORMAT);
+
     const st_utcOffset = startTime.utcOffset();
     const et_utcOffset = endTime.utcOffset();
 
@@ -35,5 +36,5 @@ export async function createEvent(
     );
     await connection.end();
 
-    return event_results[3];
+    return event_results[3][0];
 }
