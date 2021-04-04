@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         const availableFriends = [];
         for (const friend of friends) {
             let available = true;
-            const friendEvents = await getUserEvents(friend);
+            const friendEvents = await getUserEvents(friend.id);
             // const friendRecurringEvents = await getUserRecurringEvents(friend);
 
             for (const event of friendEvents) {

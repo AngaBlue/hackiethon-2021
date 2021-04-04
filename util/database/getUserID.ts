@@ -1,5 +1,4 @@
-import { Session } from "next-auth/adapters";
-
+import { Session } from "../../types/database";
 import connection from "./connection";
 
 export async function getUserID(nextAuthAccessToken: string): Promise<number> {

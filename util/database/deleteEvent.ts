@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export function deleteEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
     // TODO: Change this to accept an event ID
     // Check if event ID has mapping to user ID
