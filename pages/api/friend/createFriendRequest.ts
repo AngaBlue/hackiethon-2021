@@ -9,11 +9,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const session = await getSession({ req });
 
     if (session?.accessToken && typeof req.query.friendID == "string") {
-        if (doesUserFriendExist(session.accessToken, Number(req.query.friendID))) {
+        if (await doesUserFriendExist(session.accessToken, Number(req.query.friendID))) {
             res.status(400).json({ message: "User is already your friend" });
             return;
         }
-        if (doesUserRequestExist(session.accessToken, Number(req.query.friendID))) {
+        if (await doesUserRequestExist(session.accessToken, Number(req.query.friendID))) {
             res.status(400).json({ message: "This request already exists" });
             return;
         }
