@@ -1,7 +1,9 @@
 import connection from "./connection";
 import { CalendarEventsWithUserInfo } from "../../types/database";
 
-export async function getFriendEventsWithUserInfo(nextAuthAccessToken: string): Promise<Array<CalendarEventsWithUserInfo>> {
+export async function getFriendEventsWithUserInfo(
+    nextAuthAccessToken: string
+): Promise<Array<CalendarEventsWithUserInfo>> {
     console.log(nextAuthAccessToken);
     const results: Array<CalendarEventsWithUserInfo> = (
         await connection.query(
