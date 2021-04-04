@@ -10,6 +10,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         setUsername(session.accessToken, { username: req.query.username });
         res.status(200);
     } else {
-        res.status(500);
+        res.status(500).json({});
     }
 };

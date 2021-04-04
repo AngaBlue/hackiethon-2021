@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import serverlessMySQL from "serverless-mysql";
 
-import { CalendarEvents, Session, User } from "./databaseTypes";
+import { CalendarEvents, Session, User, UserAuth } from "./databaseTypes";
 import { RecurringEvent, UserInfoType } from "./types";
 
 const connection = serverlessMySQL({
@@ -53,18 +53,18 @@ export async function setUsername(nextAuthAccessToken: string, userInfo: UserInf
 }
 
 export async function getUserFriends(nextAuthAccessToken: string): Promise<Array<number>> {
-    const results: Array<
-        Partial<User>
-    > = await connection.query(
-        "SET @user_id = (SELECT user_id FROM sessions WHERE access_token = ?); \
+    const results: Array<Partial<User>> = (
+        await connection.query(
+            "SET @user_id = (SELECT user_id FROM sessions WHERE access_token = ?); \
         SELECT int_users.id, int_users.username \
         FROM int_users \
         INNER JOIN int_user_relationships AS rel \
             ON (int_users.id = rel.main AND rel.main = @user_id) \
             OR (int_users.id = rel.secondary AND rel.main = @user_id) \
         WHERE int_users.id <> @user_id;",
-        [nextAuthAccessToken]
-    );
+            [nextAuthAccessToken]
+        )
+    )[1];
 
     await connection.end();
 
@@ -185,4 +185,17 @@ export async function getIDByUsername(username: string): Promise<number> {
     }
 
     return results[0].id;
+}
+
+export async function getUserImage(id: number): Promise<string> {
+    const results: Array<Partial<UserAuth>> = await connection.query("SELECT image FROM users WHERE id = ?", [id]);
+
+    await connection.end();
+
+    if (results.length != 1) {
+        // Should throw?
+        return "";
+    }
+
+    return results[0].image;
 }

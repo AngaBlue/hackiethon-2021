@@ -14,7 +14,6 @@ interface ServerSideProps {
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
     const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
     const availableFriends: getFriendsAvailabilityResponse = await res.json();
-    console.log(availableFriends);
     return {
         props: {
             availableFriends

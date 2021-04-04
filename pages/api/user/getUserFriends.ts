@@ -9,6 +9,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     if (session?.accessToken) {
         res.status(200).json(getUserFriends(session.accessToken));
     } else {
-        res.status(500);
+        res.status(500).json({});
     }
 };

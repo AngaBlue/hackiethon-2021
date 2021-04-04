@@ -11,6 +11,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         createEvent(session.accessToken, dayjs(req.query.startTime), dayjs(req.query.endTime));
         res.status(200);
     } else {
-        res.status(500);
+        res.status(500).json({});
     }
 };

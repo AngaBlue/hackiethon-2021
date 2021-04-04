@@ -1,26 +1,28 @@
-import dayjs from "dayjs";
-import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/client";
+export {};
 
-import { createRecurringEvent } from "../../../util/databaseRoutes";
+// import dayjs from "dayjs";
+// import { NextApiRequest, NextApiResponse } from "next";
+// import { getSession } from "next-auth/client";
 
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    const session = await getSession({ req });
+// import { createRecurringEvent } from "../../../util/databaseRoutes";
 
-    if (
-        session?.accessToken &&
-        typeof req.query.startTime == "string" &&
-        typeof req.query.endTime == "string" &&
-        typeof req.query.dayOfWeek == "number"
-    ) {
-        createRecurringEvent(
-            session.accessToken,
-            dayjs(req.query.startTime),
-            dayjs(req.query.endTime),
-            req.query.dayOfWeek
-        );
-        res.status(200);
-    } else {
-        res.status(500);
-    }
-};
+// export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+//     const session = await getSession({ req });
+
+//     if (
+//         session?.accessToken &&
+//         typeof req.query.startTime == "string" &&
+//         typeof req.query.endTime == "string" &&
+//         typeof req.query.dayOfWeek == "number"
+//     ) {
+//         createRecurringEvent(
+//             session.accessToken,
+//             dayjs(req.query.startTime),
+//             dayjs(req.query.endTime),
+//             req.query.dayOfWeek
+//         );
+//         res.status(200);
+//     } else {
+//         res.status(500).json({});
+//     }
+// };

@@ -26,3 +26,28 @@ export interface CalendarEvents {
     end_time: string;
     utc_offset: number;
 }
+
+export interface UserAuth {
+    id: number;
+    name: string;
+    email: string;
+    email_verified: boolean;
+    image: string;
+    create_at: string;
+    updated_at: string;
+    linked_accounts: Array<Account>;
+}
+
+export interface Account {
+    id: number;
+    compound_id: number;
+    user_id: number;
+    provider_type: string;
+    provider_id: string;
+    provider_account_id: string;
+    refresh_token: string;
+    access_token: string;
+    access_token_expired: boolean;
+    created_at: string;
+    updated_at: string;
+}
