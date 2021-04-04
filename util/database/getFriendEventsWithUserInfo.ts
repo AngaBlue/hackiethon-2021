@@ -4,8 +4,7 @@ import connection from "./connection";
 export async function getFriendEventsWithUserInfo(
     nextAuthAccessToken: string
 ): Promise<Array<CalendarEventsWithUserInfo>> {
-    const results: Array<CalendarEventsWithUserInfo> = (
-        await connection.query(
+    const results: Array<CalendarEventsWithUserInfo> = await connection.query(
             "SET @user_id := (SELECT user_id FROM sessions WHERE (session_token = ? OR access_token = ?)); \
             SET time_zone = '+00:00'; \
             SELECT ce.*, friend_user.id AS user_id, friend_user.username AS username, u.image AS image \
@@ -24,8 +23,7 @@ export async function getFriendEventsWithUserInfo(
                 ON u.id = ue.user_id \
             INNER JOIN int_users AS friend_user \
                 ON friend_user.id = u.id;",
-            [nextAuthAccessToken, nextAuthAccessToken]
-        )
+        [nextAuthAccessToken, nextAuthAccessToken]
     );
 
     await connection.end();

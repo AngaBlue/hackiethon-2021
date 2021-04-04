@@ -31,8 +31,8 @@ export interface CalendarEvents {
 export interface CalendarEventsWithUserInfo {
     id: number;
     external_id: number;
-    start_time: string;
-    end_time: string;
+    start_time: Date;
+    end_time: Date;
     utc_offset: number;
     user_id: number;
     username: string;
