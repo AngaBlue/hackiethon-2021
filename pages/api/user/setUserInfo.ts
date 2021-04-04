@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
-import { setUsername } from "../../../util/databaseRoutes";
+import { setUsername } from "../../../util/database/setUsername";
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });
