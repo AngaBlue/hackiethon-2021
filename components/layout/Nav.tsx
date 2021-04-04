@@ -24,6 +24,11 @@ const navItems: navItem[] = [
     {
         name: "Settings",
         path: "/settings"
+    },
+    {
+        name: "Log Out",
+        path: "/auth/logout",
+        authenticated: true
     }
 ];
 
