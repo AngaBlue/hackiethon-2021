@@ -8,8 +8,12 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const session = await getSession({ req });
 
     if (session?.accessToken && typeof req.query.startTime == "string" && typeof req.query.endTime == "string") {
-        createEvent(session.accessToken, dayjs(req.query.startTime), dayjs(req.query.endTime));
-        res.status(200).json({});
+        const eventResult = createEvent(
+            session.accessToken,
+            dayjs(Number(req.query.startTime)),
+            dayjs(Number(req.query.endTime))
+        );
+        res.status(200).json(eventResult);
     } else {
         res.status(500).json({});
     }
