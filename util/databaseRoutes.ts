@@ -79,7 +79,58 @@ export async function getUserFriends(nextAuthAccessToken: string): Promise<Array
 
     await connection.end();
 
-    return results.map((r) => (r.main == userID ? r.secondary : r.main));
+    return results.map((r) => (r.main == userID && r.confirmed ? r.secondary : r.main));
+}
+
+export async function requestNewFriend(nextAuthAccessToken: string, friendID: number): Promise<void> {
+    const userID = await getUserID(nextAuthAccessToken);
+    await connection.query("INSERT INTO int_users_relationships (main, secondary, confirmed) VALUES (?, ?, FALSE);", [
+        userID,
+        friendID
+    ]);
+
+    await connection.end();
+
+    return;
+}
+
+export async function confirmNewFriend(nextAuthAccessToken: string, friendID: number): Promise<void> {
+    const userID = await getUserID(nextAuthAccessToken);
+    await connection.query("UPDATE int_users_relationships SET confirmed = true WHERE main = ? AND secondary = ?;", [
+        friendID,
+        userID
+    ]);
+
+    await connection.end();
+
+    return;
+}
+
+export async function getFriendRequests(nextAuthAccessToken: string): Promise<Array<string>> {
+    const userID = await getUserID(nextAuthAccessToken);
+    const results: Array<
+        Partial<UserRelationship>
+    > = await connection.query("SELECT main FROM int_users_relationships WHERE confirmed = false AND secondary = ?", [
+        userID
+    ]);
+
+    await connection.end();
+
+    const output = [];
+
+    for (const result of results) {
+        output.push(await getUsernameByID(result.main));
+    }
+
+    return output;
+}
+
+export async function deleteFriendRequest(nextAuthAccessToken: string, friendID: number): Promise<void> {
+    const userID = await getUserID(nextAuthAccessToken);
+    connection.query(
+        "DELETE FROM int_users_relationships WHERE (main = ? AND secondary = ?) OR (main = ? AND secondary = ?)",
+        [friendID, userID, userID, friendID]
+    );
 }
 
 export async function getUserID(nextAuthAccessToken: string): Promise<number> {
@@ -115,18 +166,18 @@ export function createEvent(nextAuthAccessToken: string, startTime: Dayjs, endTi
     return;
 }
 
-export function createRecurringEvent(
-    nextAuthAccessToken: string,
-    startTime: Dayjs,
-    endTime: Dayjs,
-    dayOfWeek: number
-): void {
-    // Needs database schema update
-    // Create new event with recurring flag set to true and specified repeat frequency
-    // Maybe roll into createEvent with mandatory recurring boolean parameter?
-    console.error("createRecurringEvent function is incomplete");
-    return;
-}
+// export function createRecurringEvent(
+//     nextAuthAccessToken: string,
+//     startTime: Dayjs,
+//     endTime: Dayjs,
+//     dayOfWeek: number
+// ): void {
+//     // Needs database schema update
+//     // Create new event with recurring flag set to true and specified repeat frequency
+//     // Maybe roll into createEvent with mandatory recurring boolean parameter?
+//     console.error("createRecurringEvent function is incomplete");
+//     return;
+// }
 
 export function deleteEvent(nextAuthAccessToken: string, startTime: Dayjs, endTime: Dayjs): void {
     // TODO: Change this to accept an event ID
@@ -138,16 +189,16 @@ export function deleteEvent(nextAuthAccessToken: string, startTime: Dayjs, endTi
     return;
 }
 
-export function deleteRecurringEvent(
-    nextAuthAccessToken: string,
-    startTime: Dayjs,
-    endTime: Dayjs,
-    dayOfWeek: number
-): void {
-    // Same as deleteEvent but may change depending on how recurring events are stored in the DB
-    console.error("deleteRecurringEvent function is incomplete");
-    return;
-}
+// export function deleteRecurringEvent(
+//     nextAuthAccessToken: string,
+//     startTime: Dayjs,
+//     endTime: Dayjs,
+//     dayOfWeek: number
+// ): void {
+//     // Same as deleteEvent but may change depending on how recurring events are stored in the DB
+//     console.error("deleteRecurringEvent function is incomplete");
+//     return;
+// }
 
 export async function getUserEvents(id: number): Promise<Partial<CalendarEvents>[]> {
     const results: Array<
