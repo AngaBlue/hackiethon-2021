@@ -6,7 +6,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function Card({ title, ...props }: CardProps): JSX.Element {
     return (
-        <div {...props} className="rounded bg-gray-200">
+        <div {...props} className="rounded-lg bg-gray-200 overflow-hidden">
             {!!title && (
                 <div className="bg-blue-600 p-4">
                     <h2 className="text-white text-2xl font-bold">{title}</h2>

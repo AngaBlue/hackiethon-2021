@@ -6,7 +6,7 @@ export default function Header(): JSX.Element {
     return (
         <header className="flex justify-between px-4 py-2 content-center border-b border-gray-100">
             <Link href="/">
-                <img src="logo-banner.svg" alt="Logo Banner" />
+                <img src="/logo-banner.svg" alt="Logo Banner" className="cursor-pointer" />
             </Link>
             <LoginButton />
         </header>
