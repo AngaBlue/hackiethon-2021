@@ -13,7 +13,8 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
     await connection.end();
 
     const friendEventsSorted = friendEvents.sort((a, b) => (a.user_id > b.user_id ? 1 : -1));
-    const friendsByEvent: UserWithNestedEvents[] = friendEventsSorted.reduce((prev, curr) => {
+
+    const friendsWithEvents: UserWithNestedEvents[] = friendEventsSorted.reduce((prev, curr) => {
         const filtered_results = prev.filter((p) => p.user_id == curr.user_id);
         let current_obj: UserWithNestedEvents;
 
@@ -37,9 +38,21 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
 
     let availableFriends = userFriends;
 
-    for (const friend of friendsByEvent) {
+    for (const friend of friendsWithEvents) {
         for (const event of friend.events) {
-            if (dayjs(event.start_time).isBefore(dayjs()) && dayjs(event.end_time).isAfter(dayjs())) {
+            // console.log("UTC offset: " + event.utc_offset);
+            // console.log(`StartTime: ${dayjs(event.start_time).add((0 - event.start_time.getTimezoneOffset() + event.utc_offset), "minute")}`);
+            // console.log(`EndTime: ${event.end_time} INTERPRETED: ${dayjs(event.end_time).add((0 - event.end_time.getTimezoneOffset() + event.utc_offset), "minute")}`);
+
+            // Compensate for JS dates not containing timezone data and thus treating it as though it's local time
+            if (
+                dayjs(event.start_time)
+                    .add(0 - event.start_time.getTimezoneOffset() + event.utc_offset, "minute")
+                    .isBefore(dayjs()) &&
+                dayjs(event.end_time)
+                    .add(0 - event.end_time.getTimezoneOffset() + event.utc_offset, "minute")
+                    .isAfter(dayjs())
+            ) {
                 availableFriends = availableFriends.filter((f) => f.id != friend.user_id);
                 break;
             }
