@@ -29,7 +29,6 @@ export default function Head(props: HeadProps): JSX.Element {
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content="https://hodgebodge.vercel.app/logo-banner.png" />
-
             {/* <!-- Twitter --> */}
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content="https://hodgebodge.vercel.app" />

@@ -1,22 +1,25 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-// import fetch from "node-fetch";
+import fetch from "node-fetch";
 import React from "react";
 
 import Card from "../components/Card";
 import Head from "../components/layout/Head";
 import { Secured } from "../components/Secured";
+import UserCard from "../components/UserCard";
 import { getFriendsAvailabilityResponse } from "./api/calendar/getFriendsAvailabilityNow";
 
 interface ServerSideProps {
     availableFriends: getFriendsAvailabilityResponse;
 }
 
-export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
-    // const res = await fetch("http://localhost:3000/api/calendar/getFriendsAvailabilityNow");
-    // const availableFriends: getFriendsAvailabilityResponse = await res.json();
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ctx) => {
+    const res = await fetch(
+        `http://localhost:3000/api/calendar/getFriendsAvailabilityNow?access=${ctx.req.cookies["next-auth.session-token"]}`
+    );
+    const availableFriends: getFriendsAvailabilityResponse = await res.json();
     return {
         props: {
-            availableFriends: []
+            availableFriends
         }
     };
 };
@@ -28,11 +31,7 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
             <div className="p-4">
                 <Card title="Who's Around" className="mb-4">
                     {availableFriends.length > 0 ? (
-                        availableFriends.map((friend: string) => (
-                            <div key={friend} className="flex justify-center p-2">
-                                {friend}
-                            </div>
-                        ))
+                        availableFriends.map((friend) => <UserCard key={friend.name} {...friend} />)
                     ) : (
                         <p className="text-center px-4 py-16 w-full">
                             Looks like everyone&apos;s busy right now :(

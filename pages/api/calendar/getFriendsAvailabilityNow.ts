@@ -9,14 +9,14 @@ import {
     getUsernameByID
     // getUserRecurringEvents
 } from "../../../util/databaseRoutes";
+import { UserAuth } from "../../../util/databaseTypes";
 
-export type getFriendsAvailabilityResponse = string[];
+export type getFriendsAvailabilityResponse = Pick<UserAuth, "name" | "image">[];
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    const session = await getSession({ req });
-
-    if (session?.accessToken) {
-        const friends = await getUserFriends(session.accessToken);
+    const accessToken = (req.query.access as string) || (await getSession({ req }))?.accessToken || null;
+    if (accessToken) {
+        const friends = await getUserFriends(accessToken);
         const availableFriends = [];
         for (const friend of friends) {
             let available = true;
@@ -54,7 +54,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
         res.status(200).json(
             availableFriendUsernames.map((e, i) => {
-                return { username: e, image: availableFriendPictures[i] };
+                return { name: e, image: availableFriendPictures[i] };
             })
         );
     } else {
