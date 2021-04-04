@@ -10,8 +10,8 @@ export function deleteEvent(nextAuthAccessToken: string, eventId: number): Promi
     const userId = getUserID(nextAuthAccessToken);
 
     connection.query(
-        "DELETE FROM user_events WHERE event_id = 1 AND user_id = 18; \
-        DELETE FROM calendar_events WHERE id = 1 and (SELECT COUNT(*) FROM user_events WHERE event_id = 1) = 0;",
+        "DELETE FROM user_events WHERE event_id = ? AND user_id = ?; \
+        DELETE FROM calendar_events WHERE id = ? and (SELECT COUNT(*) FROM user_events WHERE event_id = ?) = 0;",
         [eventId, userId, eventId, eventId]
     );
     return;
