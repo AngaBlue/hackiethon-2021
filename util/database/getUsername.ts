@@ -9,8 +9,8 @@ export async function getUsername(nextAuthAccessToken: string): Promise<string> 
         FROM int_users \
         INNER JOIN sessions \
         ON int_users.id = sessions.user_id \
-        AND sessions.access_token = ?",
-        [nextAuthAccessToken]
+        AND (sessions.access_token = ? OR sessions.session_token = ?)",
+        [nextAuthAccessToken, nextAuthAccessToken]
     );
 
     await connection.end();
