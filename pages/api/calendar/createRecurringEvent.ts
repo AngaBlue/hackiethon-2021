@@ -1,4 +1,4 @@
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
