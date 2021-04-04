@@ -81,7 +81,7 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center">You don&apos;t have any friends.</p>
+                    <p className="text-center px-4 py-16 w-full">You don&apos;t have any friends yet.</p>
                 )}
                 <Title>Add Friend</Title>
                 <p className="mb-4">
@@ -104,14 +104,14 @@ const friends = function ({ friends, requests }: InferGetServerSidePropsType<typ
                     </Button>
                 </div>
                 <Title>Friend Requests</Title>
-                {requests.length > 0 ? (
+                {reqs.length > 0 ? (
                     <div className="mb-4">
-                        {requests.map((friend) => (
+                        {reqs.map((friend) => (
                             <FriendRequest {...{ deleteRequest }} {...friend} key={friend.id} />
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center">You don&apos;t have any friend requests.</p>
+                    <p className="text-center px-4 py-16 w-full">You don&apos;t have any friend requests yet.</p>
                 )}
             </div>
         </>

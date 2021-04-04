@@ -1,4 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Link from "next/link";
 import React from "react";
 
 import Head from "../components/layout/Head";
@@ -8,23 +9,29 @@ import UserCard from "../components/UserCard";
 import styles from "../styles/pages/dashboard.module.scss";
 import { PromiseResolvedType } from "../types/util";
 import { getAvailableFriends } from "../util/database/getAvailableFriends";
+import { getUserProfile } from "../util/database/getUserProfile";
 import plainObject from "../util/plainObject";
 
 interface ServerSideProps {
     availableFriends: PromiseResolvedType<ReturnType<typeof getAvailableFriends>>;
+    profile: PromiseResolvedType<ReturnType<typeof getUserProfile>>;
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ctx) => {
     const token = ctx.req.cookies["next-auth.session-token"] || ctx.req.cookies["__Secure-next-auth.session-token"];
-    const [availableFriends] = await Promise.all([getAvailableFriends(token)]);
+    const [availableFriends, profile] = await Promise.all([getAvailableFriends(token), getUserProfile(token)]);
     return {
         props: {
-            availableFriends: plainObject(availableFriends)
+            availableFriends: plainObject(availableFriends),
+            profile: plainObject(profile)
         }
     };
 };
 
-const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
+const dashboard = function ({
+    availableFriends,
+    profile
+}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
     return (
         <>
             <Head title="Dashboard" />
@@ -50,6 +57,21 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
                         Come back later to find someone to hang out with!
                     </p>
                 )}
+                <Title>My Profile</Title>
+                <UserCard className="mb-4" image={profile.image} name={profile.username} />
+                <p>
+                    Share this profile name with friends so they can add you on the{" "}
+                    <Link href="/friends">
+                        <a className="underline">friends page</a>
+                    </Link>
+                    !
+                    <br />
+                    You can also change your username at anytime in your{" "}
+                    <Link href="/settings">
+                        <a className="underline">settings</a>
+                    </Link>
+                    .
+                </p>
             </div>
         </>
     );

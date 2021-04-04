@@ -1,11 +1,14 @@
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { useSession } from "next-auth/client";
 import React, { useState } from "react";
 
 import Button from "../components/Button";
 import Head from "../components/layout/Head";
+import LoginButton from "../components/LoginButton";
 import { Secured } from "../components/Secured";
 import Title from "../components/Title";
+import UserCard from "../components/UserCard";
 import AsyncState from "../types/AsyncState";
 import { PromiseResolvedType } from "../types/util";
 import { getUserProfile } from "../util/database/getUserProfile";
@@ -75,6 +78,23 @@ const settings = function ({ profile }: ServerSideProps): JSX.Element {
                         {username.loading ? "Loading..." : "Update Username"}
                     </Button>
                 </div>
+                <Title>My Profile</Title>
+                <UserCard className="mb-4" image={profile.image} name={profile.username} />
+                <p className="mb-4">
+                    Share this profile name with friends so they can add you on the{" "}
+                    <Link href="/friends">
+                        <a className="underline">friends page</a>
+                    </Link>
+                    !
+                </p>
+                <Title>Link Additional Accounts</Title>
+                <p className="mb-4">
+                    While logged, you can link additional accounts by logging in again with a new authorisation
+                    provider.
+                    <br />
+                    Please keep in mind that this is an experimental feature :)
+                </p>
+                <LoginButton force />
             </div>
         </>
     );

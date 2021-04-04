@@ -68,7 +68,7 @@ export default function timetable({ events }: ServerSideProps): JSX.Element {
                         ))}
                     </div>
                 ) : (
-                    <p className="p-4 text-center">
+                    <p className="text-center px-4 py-16 w-full">
                         You have no events listed.
                         <br />
                         Why don&apos;t you go ahead and add a few below?
