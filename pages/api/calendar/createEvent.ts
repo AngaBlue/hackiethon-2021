@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const session = await getSession({ req });
 
     if (session?.accessToken && typeof req.query.startTime == "string" && typeof req.query.endTime == "string") {
-        const eventResult = createEvent(
+        const eventResult = await createEvent(
             session.accessToken,
             dayjs(Number(req.query.startTime)),
             dayjs(Number(req.query.endTime))
