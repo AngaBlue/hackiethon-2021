@@ -9,7 +9,8 @@ const connection = serverlessMySQL({
         host: process.env.DATABASE_URL,
         user: process.env.DATABASE_ID,
         password: process.env.DATABASE_SECRET,
-        database: process.env.DATABASE_NAME
+        database: process.env.DATABASE_NAME,
+        multipleStatements: true
     }
 });
 
