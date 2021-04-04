@@ -29,18 +29,21 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
             <div className="p-4">
                 <Card title="Who's Around">
                     {availableFriends.length > 0 ? (
-                        <p>
+                        <p className="text-centre">
                             Looks like everyone&apos;s busy right now :(
                             <br />
                             Come back later to find someone to hang out with!
                         </p>
                     ) : (
-                        availableFriends.map((friend) => (
+                        availableFriends.map((friend: string) => (
                             <div key={friend} className="flex justify-center p-2">
                                 {friend}
                             </div>
                         ))
                     )}
+                </Card>
+                <Card title="Friend Requests">
+                    <p className="text-centre">You got no friends</p>
                 </Card>
             </div>
         </>
