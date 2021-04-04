@@ -22,6 +22,10 @@ const navItems: navItem[] = [
         path: "/friends"
     },
     {
+        name: "Events",
+        path: "/events"
+    },
+    {
         name: "Settings",
         path: "/settings"
     },
