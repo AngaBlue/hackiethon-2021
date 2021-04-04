@@ -1,5 +1,4 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import fetch from "node-fetch";
 import React from "react";
 
 import Card from "../components/Card";
@@ -14,13 +13,13 @@ interface ServerSideProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ctx) => {
-    const res = await fetch(
-        `http://localhost:3000/api/calendar/getFriendsAvailabilityNow?access=${ctx.req.cookies["next-auth.session-token"]}`
-    );
-    const availableFriends: getFriendsAvailabilityResponse = await res.json();
+    // const res = await fetch(
+    //     `http://localhost:3000/api/calendar/getFriendsAvailabilityNow?access=${ctx.req.cookies["next-auth.session-token"]}`
+    // );
+    // const availableFriends: getFriendsAvailabilityResponse = await res.json();
     return {
         props: {
-            availableFriends
+            availableFriends: []
         }
     };
 };
