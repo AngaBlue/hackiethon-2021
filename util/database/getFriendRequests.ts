@@ -16,10 +16,6 @@ export async function getFriendRequests(nextAuthAccessToken: string): Promise<Ar
         [nextAuthAccessToken, nextAuthAccessToken]
     );
 
-    if (results == null) {
-        console.error("Undefined results in getFriendRequest with specified access token of " + nextAuthAccessToken);
-    }
-
     await connection.end();
 
     return results;

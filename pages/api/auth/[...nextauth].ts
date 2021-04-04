@@ -44,5 +44,6 @@ export default NextAuth({
         async createUser(message) {
             createNewUser(message.id, message.name + message.id);
         }
-    }
+    },
+    secret: process.env.NEXTAUTH_SECRET
 });

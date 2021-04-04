@@ -16,8 +16,6 @@ export async function getUserProfile(nextAuthAccessToken: string): Promise<Frien
     await connection.end();
 
     if (results.length != 1) {
-        console.error("Unexpected results in getUserProfile with access token " + nextAuthAccessToken);
-        console.error(results);
         // should probably throw or something no idea at this point
     }
 

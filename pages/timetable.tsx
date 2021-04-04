@@ -46,12 +46,11 @@ export default function timetable({ events }: ServerSideProps): JSX.Element {
         if (event.loading) return;
         setEvent((f) => ({ ...f, loading: true, error: null }));
         const times = [event.data.start, event.data.end].sort((a, b) => a - b);
-        const res = await fetch(
-            `${getHost()}/api/friend/createFriendRequest?startTime=${times[0]}&endTime=${times[1]}`
-        );
+        const res = await fetch(`${getHost()}/api/calendar/createEvent?startTime=${times[0]}&endTime=${times[1]}`);
         if (res.ok) {
             setEvent({ ...event, loading: false, data: { ...initialEventState }, error: null });
-            setState([...state]);
+            const body = await res.json();
+            setState([...state, body]);
         } else {
             setEvent({ ...event, loading: false, data: { ...initialEventState }, error: await res.json() });
         }
@@ -81,7 +80,16 @@ export default function timetable({ events }: ServerSideProps): JSX.Element {
                     dateFormat="dddd, D MMMM"
                     timeFormat="h:mm a"
                     className="rounded border-gray-200 border-2 mb-4"
-                    onChange={(date) => setEvent({ ...event, data: { ...event.data, start: moment(date).valueOf() } })}
+                    initialValue={moment(event.data.start)}
+                    onChange={(date) =>
+                        setEvent({
+                            ...event,
+                            data: {
+                                ...event.data,
+                                start: typeof date === "string" ? moment(date).valueOf() : date.valueOf()
+                            }
+                        })
+                    }
                     inputProps={{ disabled: event.loading, className: "h-full w-full p-2" }}
                 />
                 <h2 className="font-bold text-2xl mb-4">End</h2>
@@ -89,9 +97,17 @@ export default function timetable({ events }: ServerSideProps): JSX.Element {
                     dateFormat="dddd, D MMMM"
                     timeFormat="h:mm a"
                     className="rounded border-gray-200 border-2 mb-4"
-                    onChange={(date) => setEvent({ ...event, data: { ...event.data, end: moment(date).valueOf() } })}
+                    initialValue={moment(event.data.start)}
+                    onChange={(date) =>
+                        setEvent({
+                            ...event,
+                            data: {
+                                ...event.data,
+                                end: typeof date === "string" ? moment(date).valueOf() : date.valueOf()
+                            }
+                        })
+                    }
                     inputProps={{ disabled: event.loading, className: "h-full w-full p-2" }}
-                    timeConstraints={{ minutes: { step: 5, min: 0, max: 60 } }}
                 />
                 <Button variant="primary" onClick={createEvent} disabled={event.loading} className="inline-block">
                     {event.loading ? "Loading..." : "Create Event"}
