@@ -17,6 +17,7 @@ export interface Session {
 export interface UserRelationship {
     main: number;
     secondary: number;
+    confirmed: boolean;
 }
 
 export interface CalendarEvents {
