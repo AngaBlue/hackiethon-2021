@@ -1,9 +1,10 @@
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { useState } from "react";
 
 import EventEntry from "../components/EventEntry";
 import Head from "../components/layout/Head";
 import Title from "../components/Title";
+import { CalendarEvents } from "../types/database";
 import { PromiseResolvedType } from "../types/util";
 import { getUserEvents } from "../util/database/getUserEvents";
 import plainObject from "../util/plainObject";
@@ -22,16 +23,24 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async (ct
     };
 };
 
-export default function timetable({ events }): JSX.Element {
+export default function timetable({ events }: ServerSideProps): JSX.Element {
+    const [state, setState] = useState(events);
+
+    function deleteEvent(id: CalendarEvents["id"]) {
+        const index = state.findIndex((e) => e.id === id);
+        if (index > -1) state.splice(index, 1);
+        setState([...state]);
+    }
+
     return (
         <>
             <Head title="Timetable" />
             <div className="p-4">
                 <Title>Your Events</Title>
-                {events.length > 1 ? (
+                {state.length > 1 ? (
                     <div>
-                        {events.map((e) => (
-                            <EventEntry key={e.id} {...e} />
+                        {state.map((e) => (
+                            <EventEntry key={e.id} {...e} deleteEvent={deleteEvent} />
                         ))}
                     </div>
                 ) : (

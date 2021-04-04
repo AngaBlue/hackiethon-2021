@@ -16,7 +16,7 @@ export default function EventEntry(props: EventEntryProps): JSX.Element {
     async function deleteEntry() {
         if (state.loading) return;
         setState({ ...state, loading: true });
-        const res = await fetch(`${getHost()}/api/calendar/deleteEvent?friendID=${props.id}`);
+        const res = await fetch(`${getHost()}/api/calendar/deleteEvent?eventID=${props.id}`);
         if (res.ok) {
             props.deleteEvent(props.id);
         } else {
