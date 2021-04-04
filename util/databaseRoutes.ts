@@ -16,7 +16,7 @@ const connection = serverlessMySQL({
 
 // Returns username based off nextAuthID
 export async function getUsername(nextAuthAccessToken: string): Promise<string> {
-    const results = await connection.query(
+    const results: any[] = await connection.query(
         "SELECT sessions.id, int_users.username \
         FROM int_users \
         INNER JOIN sessions \
