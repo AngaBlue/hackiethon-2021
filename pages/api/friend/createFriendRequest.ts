@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
-import { requestNewFriend } from "../../../util/databaseRoutes";
+import { requestNewFriend } from "../../../util/database/requestNewFriend";
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });

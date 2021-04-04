@@ -3,7 +3,7 @@ import React from "react";
 
 import Button from "../../components/Button";
 import Head from "../../components/layout/Head";
-import { PromiseResolvedType } from "../../util/types";
+import { PromiseResolvedType } from "../../types/util";
 
 interface SignInProps {
     providers: PromiseResolvedType<ReturnType<typeof getProviders>>;

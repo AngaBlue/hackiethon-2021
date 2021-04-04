@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
-import { createEvent } from "../../../util/databaseRoutes";
+import { createEvent } from "../../../util/database/createEvent";
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getSession({ req });

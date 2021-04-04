@@ -2,14 +2,11 @@ import dayjs from "dayjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
-import {
-    getUserEvents,
-    getUserFriends,
-    getUserImage,
-    getUsernameByID
-    // getUserRecurringEvents
-} from "../../../util/databaseRoutes";
-import { UserAuth } from "../../../util/databaseTypes";
+import { UserAuth } from "../../../types/database";
+import { getUserEvents } from "../../../util/database/getUserEvents";
+import { getUserFriends } from "../../../util/database/getUserFriends";
+import { getUserImage } from "../../../util/database/getUserImage";
+import { getUsernameByID } from "../../../util/database/getUsernameByID";
 
 export type getFriendsAvailabilityResponse = Pick<UserAuth, "name" | "image">[];
 

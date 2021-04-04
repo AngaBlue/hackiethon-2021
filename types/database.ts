@@ -52,3 +52,7 @@ export interface Account {
     created_at: string;
     updated_at: string;
 }
+
+export interface UserInfo {
+    username: string;
+}

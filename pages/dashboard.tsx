@@ -31,7 +31,14 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
             <div className="p-4">
                 <Card title="Who's Around" className="mb-4">
                     {availableFriends.length > 0 ? (
-                        availableFriends.map((friend) => <UserCard key={friend.name} {...friend} />)
+                        <div>
+                            {availableFriends.map((friend) => (
+                                <div key={friend.name}>
+                                    <UserCard {...friend} className="mr-4" />
+                                    <div className="bg-green-500 rounded-full h-2 w-2" />
+                                </div>
+                            ))}
+                        </div>
                     ) : (
                         <p className="text-center px-4 py-16 w-full">
                             Looks like everyone&apos;s busy right now :(
