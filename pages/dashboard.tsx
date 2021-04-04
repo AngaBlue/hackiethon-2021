@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 import React from "react";
 
 import Card from "../components/Card";
@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () 
     const availableFriends: getFriendsAvailabilityResponse = await res.json();
     return {
         props: {
-            availableFriends
+            availableFriends: []
         }
     };
 };
@@ -26,23 +26,23 @@ const dashboard = function ({ availableFriends }: InferGetServerSidePropsType<ty
         <>
             <Head title="Dashboard" />
             <div className="p-4">
-                <Card title="Who's Around">
+                <Card title="Who's Around" className="mb-4">
                     {availableFriends.length > 0 ? (
-                        <p className="text-centre">
-                            Looks like everyone&apos;s busy right now :(
-                            <br />
-                            Come back later to find someone to hang out with!
-                        </p>
-                    ) : (
                         availableFriends.map((friend: string) => (
                             <div key={friend} className="flex justify-center p-2">
                                 {friend}
                             </div>
                         ))
+                    ) : (
+                        <p className="text-center p-4 w-full">
+                            Looks like everyone&apos;s busy right now :(
+                            <br />
+                            Come back later to find someone to hang out with!
+                        </p>
                     )}
                 </Card>
                 <Card title="Friend Requests">
-                    <p className="text-centre">You got no friends</p>
+                    <p className="text-center p-4">You got no friends.</p>
                 </Card>
             </div>
         </>

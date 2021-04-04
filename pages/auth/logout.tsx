@@ -14,7 +14,7 @@ const logout = function (): JSX.Element {
                 <div>
                     <h1 className="font-bold text-4xl mb-4">Log Out</h1>
                     <p className="mb-8">
-                        Sign into Social Motion on this device.
+                        Log out Social Motion on this device.
                         <br />
                         You can login again at any time using the login provider you signed up with.
                     </p>

@@ -15,7 +15,7 @@ export default function Button({ variant, ...props }: ButtonProps): JSX.Element 
     return (
         <button
             {...props}
-            className={`py-2 px-4 rounded border-b-4 text-white ${colour[variant]} ${props.className}`}
+            className={`py-2 px-4 rounded border-b-4 text-white ${colour[variant]} ${props.className || ""}`}
             style={{ borderColor: "rgba(0,0,0,0.3)" }}
         />
     );
