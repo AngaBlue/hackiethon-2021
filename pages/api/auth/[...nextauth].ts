@@ -37,8 +37,7 @@ export default NextAuth({
     pages: {
         signIn: "/auth/login",
         newUser: "/dashboard",
-        signOut: "/auth/logout",
-        error: "/auth/error"
+        signOut: "/auth/logout"
     },
     events: {
         async createUser(message) {
