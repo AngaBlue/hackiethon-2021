@@ -21,7 +21,7 @@ export async function getAvailableFriends(nextAuthAccessToken: string): Promise<
             current_obj = new UserWithNestedEvents(curr.user_id, curr.username, curr.image);
             prev.push(current_obj);
         } else {
-            current_obj = filtered_results[1];
+            current_obj = filtered_results[0];
         }
 
         current_obj.events.push({
