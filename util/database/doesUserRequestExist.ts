@@ -1,9 +1,11 @@
 import { UserRelationship } from "../../types/database";
 import connection from "./connection";
+import { getIDByUsername } from "./getIDByUsername";
 import { getUserID } from "./getUserID";
 
-export async function doesUserRequestExist(nextAuthAccessToken: string, friendID: number): Promise<boolean> {
+export async function doesUserRequestExist(nextAuthAccessToken: string, friendUsername: string): Promise<boolean> {
     const userID = await getUserID(nextAuthAccessToken);
+    const friendID = await getIDByUsername(friendUsername);
 
     const result: Array<
         Partial<UserRelationship>

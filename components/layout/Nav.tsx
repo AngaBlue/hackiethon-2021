@@ -40,12 +40,12 @@ export default function Nav(): JSX.Element {
     const [session] = useSession();
 
     return (
-        <nav className="border-r border-blue-100">
+        <nav className="border-r border-gray-100">
             {navItems.map((item) => {
                 if (item.authenticated && !session) return null;
                 return (
                     <Link key={item.path} href={item.path}>
-                        <div className="flex p-4 items-center w-full text-blue-900 hover:bg-blue-100 cursor-pointer transition-all duration-500 border-b border-blue-100">
+                        <div className="flex p-4 items-center w-ful hover:bg-blue-100 cursor-pointer transition-all duration-500 border-b border-gray-100">
                             <span className="font-bold block h-auto">{item.name}</span>
                         </div>
                     </Link>
